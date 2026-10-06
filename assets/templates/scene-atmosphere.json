@@ -1,0 +1,68 @@
+{
+  "_meta": {
+    "template": "scene-atmosphere",
+    "use_when": "有场景实拍图的家居/家具/灯具/大件商品；靠氛围和细节标注建立品质感",
+    "reference": "深色实景 + 左右编号标注 + 底部超大标题 + 顶部品牌行 + 圆形承诺徽章",
+    "must_replace": ["brand", "eyebrow", "headline", "subheadline", "price", "date", "badge_text"],
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息"
+  },
+  "project": "kv-scene-atmosphere",
+  "lang": "zh",
+  "canvas": { "width": 1200, "height": 1500, "background": "#2B2724" },
+  "background_image": {
+    "path": "work/base/base-cn.png",
+    "fit": "cover",
+    "optional": true
+  },
+  "layers": [
+    { "type": "scrim", "box": [0, 0, 1200, 340], "direction": "top",
+      "opacity_start": 0, "opacity_end": 0.45, "color": "#100E0C" },
+    { "type": "scrim", "box": [0, 880, 1200, 620], "direction": "bottom",
+      "opacity_start": 0, "opacity_end": 0.78, "color": "#100E0C" },
+
+    { "type": "text", "text": "AGMA", "box": [60, 64, 420, 72], "font": "en", "weight": "black",
+      "size": 46, "letter_spacing": 6, "color": "#FFFFFF",
+      "shadow": { "color": "#00000055", "offset": [0, 3], "blur": 8 } },
+    { "type": "rect", "box": [880, 62, 260, 70], "radius": 8,
+      "fill": "#00000055", "outline": { "color": "#FFFFFF", "width": 2 } },
+    { "type": "text", "text": "官方旗舰正品", "box": [880, 62, 260, 70], "font": "cn",
+      "weight": "medium", "size": 30, "color": "#FFFFFF", "align": "center", "valign": "middle" },
+
+    { "type": "callout", "index": "01", "title": "免安装设计\n开箱即用", "box": [60, 420, 330, 205],
+      "anchor": [470, 590], "index_size": 96, "title_size": 34, "index_color": "#FFFFFF99",
+      "title_color": "#FFFFFF", "line": { "color": "#FFFFFFCC", "width": 2 },
+      "node": { "style": "plus", "size": 15, "color": "#EBC58A", "glyph_color": "#2B2B2B" } },
+    { "type": "callout", "index": "02", "title": "隐藏式导光\n柔和不刺眼", "box": [810, 420, 330, 205],
+      "anchor": [735, 590], "index_size": 96, "title_size": 34, "index_color": "#FFFFFF99",
+      "title_color": "#FFFFFF", "line": { "color": "#FFFFFFCC", "width": 2 },
+      "node": { "style": "plus", "size": 15, "color": "#EBC58A", "glyph_color": "#2B2B2B" } },
+    { "type": "callout", "index": "03", "title": "金属框架 4mm", "box": [60, 690, 330, 150],
+      "anchor": [430, 860], "index_size": 96, "title_size": 34, "index_color": "#FFFFFF99",
+      "title_color": "#FFFFFF", "line": { "color": "#FFFFFFCC", "width": 2 },
+      "node": { "style": "plus", "size": 15, "color": "#EBC58A", "glyph_color": "#2B2B2B" } },
+
+    { "type": "circular_text", "text": "整机质保三年", "box": [890, 750, 240, 240], "radius": 92,
+      "size": 30, "start_angle": -40, "direction": "cw", "color": "#5A4322",
+      "disc": { "fill": "#E7C48A", "radius": 108 } },
+
+    { "type": "text", "text": "床头柜 · 晨光系列", "box": [60, 975, 1080, 60], "font": "cn",
+      "weight": "medium", "size": 42, "letter_spacing": 8, "color": "#F2E9DC", "align": "center" },
+    { "type": "text", "box": [60, 1035, 1080, 195], "align": "center", "valign": "middle",
+      "spans": [
+        { "text": "晨光", "size": 176, "weight": "black", "font": "cn", "color": "#FFFFFF" },
+        { "text": " 系列", "size": 68, "weight": "medium", "font": "cn", "color": "#FFFFFF" }
+      ] },
+    { "type": "text", "text": "小空间也能拥有的收纳美学", "box": [60, 1230, 1080, 56], "font": "cn",
+      "size": 38, "color": "#EDE3D5", "align": "center" },
+
+    { "type": "rect", "box": [0, 1330, 1200, 170], "fill": "#F2C230" },
+    { "type": "metrics", "box": [70, 1348, 560, 132], "align": "left", "value_size": 78,
+      "unit_size": 30, "label_size": 26, "color": "#221E19", "label_color": "#5C5245",
+      "items": [
+        { "value": "¥399", "label": "活动价" },
+        { "value": "¥599", "label": "日常价", "color": "#8A8175", "strike": true }
+      ] },
+    { "type": "text", "text": "10月1日–10月31日 限时直降", "box": [650, 1348, 480, 132], "font": "cn",
+      "weight": "medium", "size": 32, "color": "#3A3226", "align": "right", "valign": "middle" }
+  ]
+}

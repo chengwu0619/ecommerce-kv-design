@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "template": "editorial-paper (EN twin)",
+    "use_when": "editorial-paper.json 的英文孪生骨架：坐标、底图、构件完全一致，只换文案并做必要的框宽/字号适配",
+    "reference": "与中文版并排交付；两版必须看起来是同一套物料",
+    "must_replace": ["brand", "headline_line1", "headline_line2", "product_name", "bullets",
+                     "price", "date", "cta", "vertical_accent"],
+    "notes": [
+      "拉丁标题字数通常是中文的 1.5–2 倍，字号需下调（本例 176 → 114）并放宽 box",
+      "字母小字距会把词间距压扁，务必用 word_spacing 把词间距拉回来"
+    ],
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息"
+  },
+  "project": "kv-editorial-paper-en",
+  "lang": "en",
+  "canvas": { "width": 1200, "height": 1500, "background": "#EDE5D8" },
+  "fonts": {
+    "serif-display": { "path": "NotoSerifSC-VF.ttf", "variation": "Black" },
+    "serif-medium": { "path": "NotoSerifSC-VF.ttf", "variation": "Medium" },
+    "serif-regular": { "path": "NotoSerifSC-VF.ttf", "variation": "Regular" },
+    "serif-light": { "path": "NotoSerifSC-VF.ttf", "variation": "Light" }
+  },
+  "background_image": { "path": "work/base/base-cn.png", "fit": "cover", "optional": true },
+  "layers": [
+    { "type": "ellipse", "box": [150, 330, 900, 900], "outline": { "color": "#B5773F55", "width": 2 } },
+
+    { "type": "text", "text": "AUTUMN PROMOTION · 2026", "box": [600, 62, 540, 40], "font": "serif-light",
+      "size": 22, "letter_spacing": 6, "word_spacing": 2.5, "color": "#B5773F",
+      "align": "right", "valign": "middle" },
+    { "type": "image", "path": "work/base/logo.png", "box": [60, 56, 48, 48], "fit": "contain",
+      "optional": true },
+    { "type": "text", "text": "BRAND", "box": [120, 50, 300, 62], "font": "serif-medium",
+      "size": 46, "letter_spacing": 14, "color": "#1C1A17", "valign": "middle" },
+
+    { "type": "text", "text": "Travel Light.", "box": [60, 148, 1050, 165], "font": "serif-display",
+      "size": 116, "letter_spacing": 2, "color": "#1C1A17", "valign": "middle" },
+    { "type": "text", "text": "Keep It Warm.", "box": [150, 366, 900, 165], "font": "serif-display",
+      "size": 114, "letter_spacing": 2, "color": "#B5773F", "valign": "middle" },
+
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [223, 446, 755, 943],
+      "fit": "contain", "blur": 30, "offset": [8, 22], "opacity": 0.30, "color": "#3A3226",
+      "optional": true },
+    { "type": "image", "path": "work/base/product-cutout.png", "box": [223, 446, 755, 943],
+      "fit": "contain", "optional": true },
+
+    { "type": "text", "text": "BRAND 600 mL Stainless Steel Travel Tumbler", "box": [60, 600, 390, 130],
+      "font": "serif-medium", "size": 26, "line_spacing": 1.4, "color": "#2A2620", "max_lines": 3 },
+
+    { "type": "line", "points": [[60, 780], [440, 780]], "color": "#1C1A1738", "width": 2 },
+    { "type": "list", "box": [60, 800, 390, 330], "size": 26, "gap": 20, "line_spacing": 1.4,
+      "font": "serif-regular", "color": "#2A2620",
+      "marker": { "type": "dot", "color": "#B5773F", "size": 10, "gap": 16 },
+      "items": ["316 stainless steel interior", "Keeps drinks hot or cold for up to 12 hours",
+                "One-click lock. Leak-resistant on the go."] },
+    { "type": "line", "points": [[60, 1140], [440, 1140]], "color": "#1C1A1738", "width": 2 },
+
+    { "type": "text", "text": "AUTUMN TRAVEL PRICE", "box": [60, 1155, 420, 38], "font": "serif-light",
+      "size": 22, "letter_spacing": 6, "word_spacing": 2.5, "color": "#B5773F", "valign": "middle" },
+    { "type": "text", "box": [60, 1193, 450, 145], "valign": "middle",
+      "spans": [
+        { "text": "CNY", "size": 40, "weight": "medium", "font": "serif-medium", "color": "#1C1A17" },
+        { "text": " 129", "size": 132, "weight": "black", "font": "serif-display", "color": "#1C1A17" }
+      ] },
+    { "type": "text", "text": "PROMOTION · 1-15 OCTOBER 2026", "box": [60, 1340, 660, 38],
+      "font": "serif-regular", "size": 22, "letter_spacing": 2, "word_spacing": 1.6,
+      "color": "#6E6659" },
+
+    { "type": "ellipse", "box": [890, 760, 240, 240], "outline": { "color": "#B5773F99", "width": 2 } },
+    { "type": "text", "text": "CAPACITY", "box": [890, 792, 240, 30], "font": "serif-light",
+      "size": 17, "letter_spacing": 8, "color": "#B5773F", "align": "center" },
+    { "type": "text", "text": "600", "box": [890, 828, 240, 90], "font": "serif-display",
+      "size": 60, "color": "#1C1A17", "align": "center", "valign": "middle" },
+    { "type": "text", "text": "mL", "box": [890, 918, 240, 36], "font": "serif-light",
+      "size": 20, "letter_spacing": 6, "color": "#6E6659", "align": "center" },
+
+    { "type": "ellipse", "box": [1084, 274, 12, 12], "fill": "#B5773F" },
+    { "type": "text", "text": "K\nE\nE\nP\n·\nI\nT\n·\nW\nA\nR\nM", "box": [1040, 302, 100, 420],
+      "font": "serif-light", "size": 20, "line_spacing": 1.25, "color": "#6E6659", "align": "center" },
+
+    { "type": "ellipse", "box": [820, 1090, 150, 150], "outline": { "color": "#B5773F73", "width": 2 } },
+    { "type": "line", "points": [[895, 1065], [895, 1265]], "color": "#B5773F59", "width": 1 },
+    { "type": "line", "points": [[795, 1165], [995, 1165]], "color": "#B5773F59", "width": 1 },
+    { "type": "ellipse", "box": [891, 1061, 8, 8], "fill": "#B5773F" },
+    { "type": "ellipse", "box": [891, 1261, 8, 8], "fill": "#B5773F" },
+    { "type": "ellipse", "box": [791, 1161, 8, 8], "fill": "#B5773F" },
+    { "type": "ellipse", "box": [991, 1161, 8, 8], "fill": "#B5773F" },
+    { "type": "line", "points": [[1060, 1050], [1060, 1340]], "color": "#B5773F99", "width": 2,
+      "dash": [2, 12] },
+    { "type": "ellipse", "box": [1056, 1030, 8, 8], "fill": "#B5773F" },
+    { "type": "ellipse", "box": [1056, 1344, 8, 8], "fill": "#B5773F" },
+
+    { "type": "line", "points": [[60, 1392], [1140, 1392]], "color": "#1C1A1738", "width": 2 },
+    { "type": "text", "text": "TRAVEL TUMBLER · 600 ML", "box": [60, 1404, 620, 40],
+      "font": "serif-light", "size": 20, "letter_spacing": 4, "word_spacing": 3.2,
+      "color": "#6E6659", "valign": "middle" },
+    { "type": "text", "text": "Shop now", "box": [860, 1400, 280, 44], "font": "serif-medium",
+      "size": 26, "letter_spacing": 4, "word_spacing": 2.6, "color": "#1C1A17",
+      "align": "right", "valign": "middle" },
+    { "type": "line", "points": [[1030, 1446], [1140, 1446]], "color": "#B5773F", "width": 2 }
+  ]
+}

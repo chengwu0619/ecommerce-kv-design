@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "template": "scene-photo-side",
+    "use_when": "摄影场景底图（棚拍静物/水台/台座）+ 商品侧置的成品版面；日用、个护、家居小件都适用",
+    "layout_contract": "商品中心 0.674（右 1/3）、商品底部落在 80% 高度线（底部留 1/5 做配景带）、商品站在台座上；左列自上而下：产品名 / 卖点 / 价格 / 活动时间；标题两行、第二行换琥珀色，允许被商品轻微遮挡（≤ 字符高度 1/4，不得切断词）",
+    "how_to_get_scene": "① 场景照片重构：scripts/build_scene_from_photo.py --px 0.674 --py 0.80（见 photo-base.md 路径六）；② 程序化生成：scripts/make_scene_base.py（路径五）；③ 生图底图：assets/templates/imagegen-scene-prompt.md",
+    "reflection": "商品站在水面或亮面石材上时，先跑 scripts/make_reflection.py 生成倒影贴图，再放到模板里的 reflection 图层（默认 box 起点 = 商品底部高度）",
+    "must_replace": ["brand", "headline_line1", "headline_line2", "product_name", "bullets", "price_amount", "date", "promo"],
+    "optional_layers": "行动语（action_text + 其下划线 line）是可选项：用户没要求或明确不要时整段删除，右下留白",
+    "notes": [
+      "文字色：深墨绿 #2E3A2C 为正文，琥珀 #B08A4A 只用于第二行标题/圆点，浅底上的小标签用更深的 #8F6B33 保证对比度",
+      "信息小字不要缩小：正文 34px / Bold、标签 24–28px / Medium（1200 宽基准）",
+      "拉丁标题用 assets/fonts/PlayfairDisplay-VF.ttf：复制到 work/base/fonts/ 或安装到系统，否则脚本回退默认字体"
+    ],
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息；底图须为自有/授权/AI 生成素材"
+  },
+  "project": "kv-scene-photo-side",
+  "lang": "zh",
+  "canvas": { "width": 1200, "height": 1500, "background": "#EAEFE6" },
+  "fonts": {
+    "serif-display": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Black" },
+    "serif-bold": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Bold" },
+    "serif-medium": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Medium" },
+    "serif-regular": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Regular" },
+    "serif-light": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Light" },
+    "display-latin": { "path": "work/base/fonts/PlayfairDisplay-VF.ttf", "variation": "SemiBold" },
+    "display-latin-bold": { "path": "work/base/fonts/PlayfairDisplay-VF.ttf", "variation": "Black" }
+  },
+  "background_image": { "path": "work/base/base-cn.png", "fit": "cover", "optional": true },
+  "layers": [
+    { "type": "image", "path": "work/base/logo.png", "box": [60, 36, 48, 48], "fit": "contain",
+      "optional": true },
+    { "type": "text", "text": "BRAND", "box": [122, 30, 300, 60], "font": "display-latin",
+      "size": 48, "letter_spacing": 12, "color": "#2E3A2C", "valign": "middle" },
+
+    { "type": "text", "text": "轻装出行", "box": [60, 132, 620, 176], "font": "serif-display",
+      "size": 156, "letter_spacing": 4, "color": "#2E3A2C", "valign": "middle" },
+    { "type": "text", "text": "温度随行", "box": [100, 300, 620, 176], "font": "serif-display",
+      "size": 156, "letter_spacing": 4, "color": "#B08A4A", "valign": "middle" },
+
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [363, 208, 886, 1107],
+      "fit": "contain", "blur": 38, "offset": [14, 22], "opacity": 0.20, "color": "#4A5540",
+      "optional": true },
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [363, 208, 886, 1107],
+      "fit": "contain", "blur": 12, "offset": [5, 8], "opacity": 0.26, "color": "#404A38",
+      "optional": true },
+    { "type": "image", "path": "work/base/product-cutout.png", "box": [363, 208, 886, 1107],
+      "fit": "contain", "optional": true },
+    { "type": "image", "path": "work/base/product-reflection.png", "box": [655, 1196, 400, 900],
+      "fit": "contain", "opacity": 0.55, "optional": true },
+
+    { "type": "text", "text": "BRAND 600 mL\n不锈钢保温杯", "box": [60, 500, 560, 116], "font": "serif-bold",
+      "size": 36, "line_spacing": 1.40, "color": "#2E3A2C", "max_lines": 2 },
+
+    { "type": "line", "points": [[60, 640], [600, 640]], "color": "#2E3A2C40", "width": 2 },
+    { "type": "list", "box": [60, 668, 560, 210], "size": 34, "gap": 24, "line_spacing": 1.35,
+      "font": "serif-bold", "color": "#2E3A2C",
+      "marker": { "type": "dot", "color": "#B08A4A", "size": 12, "gap": 18 },
+      "items": ["316 不锈钢内胆", "12 小时保温保冷", "一键锁扣 防漏随行"] },
+    { "type": "line", "points": [[60, 900], [600, 900]], "color": "#2E3A2C40", "width": 2 },
+
+    { "type": "text", "text": "秋日出行价", "box": [60, 912, 400, 34], "font": "serif-medium",
+      "size": 28, "letter_spacing": 10, "color": "#8F6B33", "valign": "middle" },
+    { "type": "text", "box": [60, 950, 560, 150], "valign": "middle",
+      "spans": [
+        { "text": "129", "size": 146, "weight": "black", "font": "serif-display", "color": "#2E3A2C" },
+        { "text": " 元", "size": 46, "weight": "bold", "font": "serif-bold", "color": "#2E3A2C" }
+      ] },
+    { "type": "text", "text": "活动时间", "box": [60, 1118, 400, 30], "font": "serif-medium",
+      "size": 24, "letter_spacing": 8, "color": "#8F6B33", "valign": "middle" },
+    { "type": "text", "text": "2026 年 10 月 1 日至 10 月 15 日", "box": [60, 1150, 590, 46],
+      "font": "serif-bold", "size": 27, "color": "#3A4636" },
+
+    { "type": "text", "text": "秋季限时促销 · 2026", "box": [60, 1424, 540, 36], "font": "serif-medium",
+      "size": 24, "letter_spacing": 8, "color": "#55624A", "valign": "middle" },
+    { "type": "text", "text": "立即选购", "box": [860, 1408, 280, 44], "font": "serif-medium",
+      "size": 28, "letter_spacing": 4, "color": "#2A2620", "align": "right", "valign": "middle" },
+    { "type": "line", "points": [[1014, 1462], [1140, 1462]], "color": "#B5773F", "width": 2 }
+  ]
+}

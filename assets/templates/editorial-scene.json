@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "template": "editorial-scene（浅调偏侧）",
+    "use_when": "浅调、留白大的场景型主视觉；商品偏左或偏右略靠上，底部约 1/5 留给配景带",
+    "reference": "极浅薄荷/米白渐变 + 边缘虚化枝叶 + 底部缎面带与松枝干果 + 高对比衬线标题 + 竖排字距英文",
+    "layout_rules": [
+      "商品主体不居中：靠右（product_x 0.66–0.72）或靠左，略高于视觉中线",
+      "底部配景带（缎面/台面 + 配景）占图高约 1/5（1500px 画布约 300px）",
+      "文字列放在商品对侧，宽度收在商品轮廓之外；标题可被商品压住末字的一小部分"
+    ],
+    "must_replace": ["brand", "promo", "headline_line1", "headline_line2", "product_name", "bullets", "price", "date"],
+    "optional_layers": "行动语是可选图层：本次交付按要求不放，需要时在左下或右下加一层文字 + 一条下划线即可。",
+    "notes": [
+      "底图：scripts/make_scene_base.py --palette mint --props drape,pine,fruit,pod --band 0.21 --product-x 0.68 --bokeh 1.0；也可按 assets/templates/imagegen-scene-prompt.md 生图后替换",
+      "浅底上文字用深鼠尾草墨色 + 单一金色强调；深色居中变体见 assets/showcase/kv-scene-dark-*",
+      "商品对浅底对比弱时，叠两层 shadow（宽而淡 + 窄而实）把商品压住底面"
+    ],
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息"
+  },
+  "project": "kv-editorial-scene-light",
+  "lang": "zh",
+  "canvas": { "width": 1200, "height": 1500, "background": "#EAEFE6" },
+  "fonts": {
+    "serif-display": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Black" },
+    "serif-medium": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Medium" },
+    "serif-regular": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Regular" },
+    "serif-light": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Light" },
+    "display-latin": { "path": "work/base/fonts/PlayfairDisplay-VF.ttf", "variation": "SemiBold" },
+    "display-latin-bold": { "path": "work/base/fonts/PlayfairDisplay-VF.ttf", "variation": "Black" }
+  },
+  "background_image": { "path": "work/base/base-cn.png", "fit": "cover", "optional": true },
+  "layers": [
+    { "type": "image", "path": "work/base/logo.png", "box": [60, 40, 44, 44], "fit": "contain",
+      "optional": true },
+    { "type": "text", "text": "BRAND", "box": [116, 34, 300, 56], "font": "display-latin",
+      "size": 46, "letter_spacing": 12, "color": "#2E3A2C", "valign": "middle" },
+    { "type": "text", "text": "秋季限时促销 · 2026", "box": [660, 46, 480, 36], "font": "serif-light",
+      "size": 24, "letter_spacing": 8, "color": "#8A9A7C", "align": "right", "valign": "middle" },
+
+    { "type": "text", "text": "轻装出行", "box": [60, 132, 600, 176], "font": "serif-display",
+      "size": 144, "letter_spacing": 4, "color": "#2E3A2C", "valign": "middle" },
+    { "type": "text", "text": "温度随行", "box": [100, 300, 600, 176], "font": "serif-display",
+      "size": 144, "letter_spacing": 4, "color": "#B08A4A", "valign": "middle" },
+
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [334, 247, 896, 1119],
+      "fit": "contain", "blur": 38, "offset": [14, 22], "opacity": 0.20, "color": "#4A5540",
+      "optional": true },
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [334, 247, 896, 1119],
+      "fit": "contain", "blur": 12, "offset": [5, 8], "opacity": 0.26, "color": "#404A38",
+      "optional": true },
+    { "type": "image", "path": "work/base/product-cutout.png", "box": [334, 247, 896, 1119],
+      "fit": "contain", "optional": true },
+
+    { "type": "text", "text": "BRAND 600 mL\n不锈钢保温杯", "box": [60, 520, 520, 104], "font": "serif-medium",
+      "size": 30, "line_spacing": 1.42, "color": "#3A4636", "max_lines": 2 },
+
+    { "type": "line", "points": [[60, 652], [580, 652]], "color": "#2E3A2C33", "width": 2 },
+    { "type": "list", "box": [60, 678, 540, 230], "size": 28, "gap": 20, "line_spacing": 1.35,
+      "font": "serif-regular", "color": "#3A4636",
+      "marker": { "type": "dot", "color": "#B08A4A", "size": 10, "gap": 16 },
+      "items": ["316 不锈钢内胆", "12 小时保温保冷", "一键锁扣 防漏随行"] },
+    { "type": "line", "points": [[60, 930], [580, 930]], "color": "#2E3A2C33", "width": 2 },
+
+    { "type": "text", "text": "秋日出行价", "box": [60, 940, 400, 30], "font": "serif-light",
+      "size": 24, "letter_spacing": 10, "color": "#B08A4A", "valign": "middle" },
+    { "type": "text", "box": [60, 970, 545, 140], "valign": "middle",
+      "spans": [
+        { "text": "129", "size": 136, "weight": "black", "font": "serif-display", "color": "#2E3A2C" },
+        { "text": " 元", "size": 44, "weight": "medium", "font": "serif-medium", "color": "#3A4636" }
+      ] },
+    { "type": "text", "text": "活动时间", "box": [60, 1100, 400, 26], "font": "serif-light",
+      "size": 20, "letter_spacing": 8, "color": "#B08A4A", "valign": "middle" },
+    { "type": "text", "text": "2026 年 10 月 1 日至 10 月 15 日", "box": [60, 1128, 560, 40],
+      "font": "serif-regular", "size": 22, "color": "#4A5548" },
+
+    { "type": "ellipse", "box": [1064, 388, 12, 12], "fill": "#B08A4A" },
+    { "type": "text", "text": "T\nR\nA\nV\nE\nL\n·\nL\nI\nG\nH\nT", "box": [1024, 414, 108, 420],
+      "font": "serif-light", "size": 22, "line_spacing": 1.25, "color": "#7C8A72", "align": "center" }
+  ]
+}

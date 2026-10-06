@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "template": "scene-atmosphere (EN twin)",
+    "use_when": "scene-atmosphere.json 的英文版孪生骨架：坐标、底图、骨架完全一致，只换文案与单位/日期写法",
+    "reference": "与中文版并排交付；两版必须看起来是同一套物料",
+    "must_replace": ["brand", "eyebrow", "headline", "subheadline", "price", "date", "badge_text"],
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息"
+  },
+  "project": "kv-scene-atmosphere-en",
+  "lang": "en",
+  "canvas": { "width": 1200, "height": 1500, "background": "#2B2724" },
+  "background_image": {
+    "path": "work/base/base-cn.png",
+    "fit": "cover",
+    "optional": true
+  },
+  "layers": [
+    { "type": "scrim", "box": [0, 0, 1200, 340], "direction": "top",
+      "opacity_start": 0, "opacity_end": 0.40, "color": "#100E0C" },
+    { "type": "scrim", "box": [0, 720, 1200, 360], "direction": "bottom",
+      "opacity_start": 0, "opacity_end": 0.45, "color": "#100E0C" },
+    { "type": "scrim", "box": [0, 980, 1200, 520], "direction": "bottom",
+      "opacity_start": 0.36, "opacity_end": 0.92, "color": "#100E0C" },
+
+    { "type": "text", "text": "AGMA COMPANY", "box": [60, 62, 560, 72], "font": "en",
+      "weight": "black", "size": 42, "letter_spacing": 4, "color": "#FFFFFF",
+      "shadow": { "color": "#00000066", "offset": [0, 3], "blur": 8 } },
+    { "type": "rect", "box": [880, 60, 260, 70], "radius": 8,
+      "fill": "#00000055", "outline": { "color": "#FFFFFF", "width": 2 } },
+    { "type": "text", "text": "OFFICIAL STORE", "box": [880, 60, 260, 70], "font": "en",
+      "weight": "medium", "size": 26, "letter_spacing": 1, "color": "#FFFFFF",
+      "align": "center", "valign": "middle" },
+
+    { "type": "callout", "index": "01", "title": "No assembly\nrequired", "box": [60, 300, 330, 200],
+      "anchor": [470, 430], "index_size": 96, "title_size": 34, "index_color": "#FFFFFF99",
+      "title_color": "#FFFFFF", "line": { "color": "#FFFFFFCC", "width": 2 },
+      "node": { "style": "plus", "size": 15, "color": "#EBC58A", "glyph_color": "#2B2B2B" } },
+    { "type": "callout", "index": "02", "title": "Diffused glow\nsoft on the eyes", "box": [810, 300, 330, 200],
+      "anchor": [730, 430], "index_size": 96, "title_size": 34, "index_color": "#FFFFFF99",
+      "title_color": "#FFFFFF", "line": { "color": "#FFFFFFCC", "width": 2 },
+      "node": { "style": "plus", "size": 15, "color": "#EBC58A", "glyph_color": "#2B2B2B" } },
+    { "type": "callout", "index": "03", "title": "4 mm metal frame", "box": [60, 560, 330, 150],
+      "anchor": [430, 700], "index_size": 96, "title_size": 34, "index_color": "#FFFFFF99",
+      "title_color": "#FFFFFF", "line": { "color": "#FFFFFFCC", "width": 2 },
+      "node": { "style": "plus", "size": 15, "color": "#EBC58A", "glyph_color": "#2B2B2B" } },
+
+    { "type": "circular_text", "text": "3-YEAR WARRANTY", "box": [890, 750, 240, 240], "radius": 92,
+      "size": 30, "start_angle": 200, "direction": "cw", "color": "#5A4322",
+      "disc": { "fill": "#E7C48A", "radius": 108 } },
+
+    { "type": "text", "text": "BEDSIDE CABINET · DAWN SERIES", "box": [60, 975, 1080, 60], "font": "en",
+      "weight": "medium", "size": 38, "letter_spacing": 6, "color": "#F2E9DC", "align": "center" },
+    { "type": "text", "box": [60, 1035, 1080, 195], "align": "center", "valign": "middle",
+      "spans": [
+        { "text": "DAWN", "size": 168, "weight": "black", "font": "en", "color": "#FFFFFF" },
+        { "text": " SERIES", "size": 66, "weight": "medium", "font": "en", "color": "#FFFFFF" }
+      ] },
+    { "type": "text", "text": "Storage that fits small spaces", "box": [60, 1230, 1080, 56], "font": "en",
+      "size": 36, "color": "#EDE3D5", "align": "center" },
+
+    { "type": "rect", "box": [0, 1330, 1200, 170], "fill": "#F2C230" },
+    { "type": "metrics", "box": [70, 1348, 620, 132], "align": "left", "value_size": 78,
+      "unit_size": 30, "label_size": 26, "color": "#221E19", "label_color": "#5C5245",
+      "items": [
+        { "value": "¥399", "label": "SALE PRICE" },
+        { "value": "¥599", "label": "REGULAR", "color": "#8A8175", "strike": true }
+      ] },
+    { "type": "text", "text": "Limited offer · Oct 1–31, 2026", "box": [650, 1348, 480, 132], "font": "en",
+      "weight": "medium", "size": 28, "color": "#3A3226", "align": "right", "valign": "middle" }
+  ]
+}

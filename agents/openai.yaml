@@ -1,0 +1,5 @@
+interface:
+  display_name: "E-commerce KV Design"
+  short_description: "出中英双版 4:5 商品主视觉 PNG：卖点、价格、活动时间一次到位"
+  brand_color: "#F2C230"
+  default_prompt: "Use $ecommerce-kv-design to turn my product details into a Chinese and an English 4:5 e-commerce hero image (PNG)."

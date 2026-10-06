@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "template": "scene-photo-side (EN twin)",
+    "use_when": "scene-photo-side.json 的英文孪生骨架：底图、坐标、图层结构一致，只换文案与字号",
+    "layout_contract": "商品中心 0.674（右 1/3）、商品底部落在 80% 高度线、左列信息自下而上排布；英文标题按字数下调（中文 156 → 拉丁 92–98）",
+    "must_replace": ["brand", "headline_line1", "headline_line2", "product_name", "bullets", "price_amount", "date", "promo"],
+    "optional_layers": "行动语（Shop now + 下划线）是可选项，用户不要时整段删除",
+    "notes": [
+      "拉丁小字距标签必须配 word_spacing（2.5–2.6），否则词间距被挤没",
+      "英文标题更宽，必要时缩到 92–98px 并左移，保证词不被商品切断",
+      "英文卖点句子更长，左栏 box 宽度收到 570，避免被商品压住"
+    ],
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息；底图须为自有/授权/AI 生成素材"
+  },
+  "project": "kv-scene-photo-side-en",
+  "lang": "en",
+  "canvas": { "width": 1200, "height": 1500, "background": "#EAEFE6" },
+  "fonts": {
+    "serif-display": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Black" },
+    "serif-bold": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Bold" },
+    "serif-medium": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Medium" },
+    "serif-regular": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Regular" },
+    "serif-light": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Light" },
+    "display-latin": { "path": "work/base/fonts/PlayfairDisplay-VF.ttf", "variation": "SemiBold" },
+    "display-latin-bold": { "path": "work/base/fonts/PlayfairDisplay-VF.ttf", "variation": "Black" }
+  },
+  "background_image": { "path": "work/base/base-cn.png", "fit": "cover", "optional": true },
+  "layers": [
+    { "type": "image", "path": "work/base/logo.png", "box": [60, 36, 48, 48], "fit": "contain",
+      "optional": true },
+    { "type": "text", "text": "BRAND", "box": [122, 30, 300, 60], "font": "display-latin",
+      "size": 48, "letter_spacing": 12, "color": "#2E3A2C", "valign": "middle" },
+
+    { "type": "text", "text": "Travel Light.", "box": [60, 140, 700, 160], "font": "display-latin-bold",
+      "size": 98, "letter_spacing": 1, "color": "#2E3A2C", "valign": "middle" },
+    { "type": "text", "text": "Keep It Warm.", "box": [90, 300, 700, 160], "font": "display-latin-bold",
+      "size": 92, "letter_spacing": 1, "color": "#B08A4A", "valign": "middle" },
+
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [363, 208, 886, 1107],
+      "fit": "contain", "blur": 38, "offset": [14, 22], "opacity": 0.20, "color": "#4A5540",
+      "optional": true },
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [363, 208, 886, 1107],
+      "fit": "contain", "blur": 12, "offset": [5, 8], "opacity": 0.26, "color": "#404A38",
+      "optional": true },
+    { "type": "image", "path": "work/base/product-cutout.png", "box": [363, 208, 886, 1107],
+      "fit": "contain", "optional": true },
+    { "type": "image", "path": "work/base/product-reflection.png", "box": [655, 1196, 400, 900],
+      "fit": "contain", "opacity": 0.55, "optional": true },
+
+    { "type": "text", "text": "BRAND 600 mL Stainless Steel Travel Tumbler", "box": [60, 496, 570, 128],
+      "font": "serif-bold", "size": 32, "line_spacing": 1.40, "color": "#2E3A2C", "max_lines": 3 },
+
+    { "type": "line", "points": [[60, 640], [600, 640]], "color": "#2E3A2C40", "width": 2 },
+    { "type": "list", "box": [60, 668, 570, 240], "size": 31, "gap": 22, "line_spacing": 1.38,
+      "font": "serif-bold", "color": "#2E3A2C",
+      "marker": { "type": "dot", "color": "#B08A4A", "size": 12, "gap": 18 },
+      "items": ["316 stainless steel interior", "Keeps drinks hot or cold for up to 12 hours",
+                "One-click lock. Leak-resistant on the go."] },
+    { "type": "line", "points": [[60, 936], [600, 936]], "color": "#2E3A2C40", "width": 2 },
+
+    { "type": "text", "text": "AUTUMN TRAVEL PRICE", "box": [60, 948, 420, 34], "font": "display-latin",
+      "size": 24, "letter_spacing": 6, "word_spacing": 2.6, "color": "#8F6B33", "valign": "middle" },
+    { "type": "text", "box": [60, 986, 560, 150], "valign": "middle",
+      "spans": [
+        { "text": "CNY", "size": 46, "weight": "medium", "font": "display-latin", "color": "#2E3A2C" },
+        { "text": " 129", "size": 140, "weight": "black", "font": "display-latin-bold", "color": "#2E3A2C" }
+      ] },
+    { "type": "text", "text": "PROMOTION", "box": [60, 1150, 420, 30], "font": "display-latin",
+      "size": 24, "letter_spacing": 8, "color": "#8F6B33", "valign": "middle" },
+    { "type": "text", "text": "1-15 October 2026", "box": [60, 1186, 590, 46], "font": "display-latin",
+      "size": 30, "color": "#3A4636" },
+
+    { "type": "text", "text": "AUTUMN PROMOTION · 2026", "box": [60, 1424, 540, 36], "font": "display-latin",
+      "size": 22, "letter_spacing": 6, "word_spacing": 2.5, "color": "#55624A", "valign": "middle" },
+    { "type": "text", "text": "Shop now", "box": [860, 1408, 280, 44], "font": "display-latin",
+      "size": 28, "letter_spacing": 4, "word_spacing": 2.6, "color": "#2A2620",
+      "align": "right", "valign": "middle" },
+    { "type": "line", "points": [[1006, 1462], [1140, 1462]], "color": "#B5773F", "width": 2 }
+  ]
+}

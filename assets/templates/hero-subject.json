@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "template": "hero-subject",
+    "use_when": "单一大主体商品：母婴、宠物、3C、清洁电器、大件；靠主体体量 + 关键参数 + 适用信息说服",
+    "reference": "浅暖底 + 左上标题 + 药丸标签 + 左侧竖条卖点 + 大数字参数 + 右上信息卡 + 斜切色块",
+    "must_replace": ["headline", "age_card", "bullets", "metric", "price", "date", "brand"],
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息"
+  },
+  "project": "kv-hero-subject",
+  "lang": "zh",
+  "canvas": { "width": 1200, "height": 1500, "background_gradient": { "from": "#F5F1EA", "to": "#E2D7C6" } },
+  "layers": [
+    { "type": "polygon", "points": [[0, 1180], [1200, 1010], [1200, 1500], [0, 1500]], "fill": "#C8AE86" },
+    { "type": "image", "path": "work/base/product-cutout.png", "box": [230, 300, 920, 990],
+      "fit": "contain", "optional": true },
+
+    { "type": "text", "text": "轻便", "box": [60, 120, 600, 60], "font": "cn", "weight": "medium",
+      "size": 44, "letter_spacing": 6, "color": "#6B6252" },
+    { "type": "text", "text": "折叠婴儿车", "box": [60, 176, 760, 150], "font": "cn",
+      "weight": "bold", "size": 96, "color": "#3A3428" },
+    { "type": "chip", "text": "全季通用", "box": [60, 350, 320, 66], "size": 34, "fill": "#6E6A5F",
+      "color": "#FFFFFF", "auto_width": true, "icon": "dot", "icon_color": "#6E6A5F" },
+
+    { "type": "list", "box": [60, 470, 430, 210], "size": 34, "gap": 24, "color": "#39342B",
+      "marker": { "type": "bar", "color": "#8A8069", "width": 6, "gap": 20 },
+      "items": ["单手一键收车，收好可自立", "座椅靠背可调，坐躺都稳"] },
+    { "type": "metrics", "box": [60, 720, 430, 200], "align": "left", "value_size": 108,
+      "unit_size": 34, "label_size": 28, "color": "#332E25", "label_color": "#6B6252",
+      "items": [ { "value": "22", "unit": "kg", "label": "最大承重" } ] },
+
+    { "type": "rect", "box": [870, 60, 270, 230], "radius": 18, "fill": "#3A3A32" },
+    { "type": "metrics", "box": [890, 80, 230, 190], "align": "center", "value_size": 86,
+      "unit_size": 34, "label_size": 28, "color": "#FFFFFF", "label_color": "#D6CFBF",
+      "items": [ { "value": "0–3", "unit": "岁", "label": "适用年龄" } ] },
+
+    { "type": "rect", "box": [0, 1370, 1200, 130], "fill": "#FFFFFF" },
+    { "type": "text", "text": "ZOREX", "box": [70, 1388, 300, 94], "font": "en", "weight": "black",
+      "size": 40, "letter_spacing": 4, "color": "#3A3428", "valign": "middle" },
+    { "type": "metrics", "box": [430, 1378, 400, 112], "align": "right", "value_size": 62,
+      "unit_size": 26, "label_size": 24, "color": "#3A3428", "label_color": "#7A7264",
+      "items": [
+        { "value": "¥1299", "label": "活动价" },
+        { "value": "¥1599", "label": "日常价", "color": "#9A9284", "strike": true }
+      ] },
+    { "type": "text", "text": "10月1日–10月31日", "box": [860, 1388, 270, 94], "font": "cn",
+      "weight": "medium", "size": 30, "color": "#5C5745", "align": "right", "valign": "middle" }
+  ]
+}

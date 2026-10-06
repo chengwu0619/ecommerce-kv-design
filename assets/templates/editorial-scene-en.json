@@ -1,0 +1,78 @@
+{
+  "_meta": {
+    "template": "editorial-scene（浅调偏侧）EN twin",
+    "use_when": "editorial-scene.json 的英文孪生骨架：底图、商品位置、配景带完全一致，只换文案",
+    "reference": "与中文版并排交付；两版必须看起来是同一套物料",
+    "layout_rules": [
+      "商品位置与中文版一致（靠右、略靠上），底部配景带同样约 1/5",
+      "拉丁标题比中文长 1.5–2 倍：中文 144px 对应拉丁约 86–92px，且不右移错位，避免被商品压住太多",
+      "标题末字可被商品压住一小部分；文字列宽度要收在商品轮廓之外"
+    ],
+    "must_replace": ["brand", "promo", "headline_line1", "headline_line2", "product_name",
+                     "bullets", "price", "date"],
+    "optional_layers": "行动语（Shop now + 下划线）是可选图层，本次交付按要求未使用。",
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息"
+  },
+  "project": "kv-editorial-scene-light-en",
+  "lang": "en",
+  "canvas": { "width": 1200, "height": 1500, "background": "#EAEFE6" },
+  "fonts": {
+    "serif-display": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Black" },
+    "serif-medium": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Medium" },
+    "serif-regular": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Regular" },
+    "serif-light": { "path": "C:/Windows/Fonts/NotoSerifSC-VF.ttf", "variation": "Light" },
+    "display-latin": { "path": "work/base/fonts/PlayfairDisplay-VF.ttf", "variation": "SemiBold" },
+    "display-latin-bold": { "path": "work/base/fonts/PlayfairDisplay-VF.ttf", "variation": "Black" }
+  },
+  "background_image": { "path": "work/base/base-cn.png", "fit": "cover", "optional": true },
+  "layers": [
+    { "type": "image", "path": "work/base/logo.png", "box": [60, 40, 44, 44], "fit": "contain",
+      "optional": true },
+    { "type": "text", "text": "BRAND", "box": [116, 34, 300, 56], "font": "display-latin",
+      "size": 46, "letter_spacing": 12, "color": "#2E3A2C", "valign": "middle" },
+    { "type": "text", "text": "AUTUMN PROMOTION · 2026", "box": [560, 46, 580, 36], "font": "display-latin",
+      "size": 20, "letter_spacing": 6, "word_spacing": 2.5, "color": "#8A9A7C",
+      "align": "right", "valign": "middle" },
+
+    { "type": "text", "text": "Travel Light.", "box": [60, 132, 660, 176], "font": "display-latin-bold",
+      "size": 92, "letter_spacing": 2, "color": "#2E3A2C", "valign": "middle" },
+    { "type": "text", "text": "Keep It Warm.", "box": [60, 300, 660, 176], "font": "display-latin-bold",
+      "size": 86, "letter_spacing": 2, "color": "#B08A4A", "valign": "middle" },
+
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [334, 247, 896, 1119],
+      "fit": "contain", "blur": 38, "offset": [14, 22], "opacity": 0.20, "color": "#4A5540",
+      "optional": true },
+    { "type": "shadow", "path": "work/base/product-cutout.png", "box": [334, 247, 896, 1119],
+      "fit": "contain", "blur": 12, "offset": [5, 8], "opacity": 0.26, "color": "#404A38",
+      "optional": true },
+    { "type": "image", "path": "work/base/product-cutout.png", "box": [334, 247, 896, 1119],
+      "fit": "contain", "optional": true },
+
+    { "type": "text", "text": "BRAND 600 mL Stainless Steel Travel Tumbler", "box": [60, 512, 520, 120],
+      "font": "serif-medium", "size": 26, "line_spacing": 1.4, "color": "#3A4636", "max_lines": 2 },
+
+    { "type": "line", "points": [[60, 652], [580, 652]], "color": "#2E3A2C33", "width": 2 },
+    { "type": "list", "box": [60, 678, 540, 240], "size": 24, "gap": 18, "line_spacing": 1.4,
+      "font": "serif-regular", "color": "#3A4636",
+      "marker": { "type": "dot", "color": "#B08A4A", "size": 10, "gap": 16 },
+      "items": ["316 stainless steel interior", "Keeps drinks hot or cold for up to 12 hours",
+                "One-click lock. Leak-resistant on the go."] },
+    { "type": "line", "points": [[60, 930], [580, 930]], "color": "#2E3A2C33", "width": 2 },
+
+    { "type": "text", "text": "AUTUMN TRAVEL PRICE", "box": [60, 940, 400, 30], "font": "display-latin",
+      "size": 20, "letter_spacing": 5, "word_spacing": 2.5, "color": "#B08A4A", "valign": "middle" },
+    { "type": "text", "box": [60, 970, 545, 140], "valign": "middle",
+      "spans": [
+        { "text": "CNY", "size": 40, "weight": "medium", "font": "display-latin", "color": "#3A4636" },
+        { "text": " 129", "size": 130, "weight": "black", "font": "display-latin-bold", "color": "#2E3A2C" }
+      ] },
+    { "type": "text", "text": "PROMOTION", "box": [60, 1100, 400, 26], "font": "display-latin",
+      "size": 20, "letter_spacing": 8, "color": "#B08A4A", "valign": "middle" },
+    { "type": "text", "text": "1-15 October 2026", "box": [60, 1128, 560, 40], "font": "display-latin",
+      "size": 26, "color": "#4A5548" },
+
+    { "type": "ellipse", "box": [1064, 388, 12, 12], "fill": "#B08A4A" },
+    { "type": "text", "text": "K\nE\nE\nP\n·\nI\nT\n·\nW\nA\nR\nM", "box": [1024, 414, 108, 420],
+      "font": "display-latin", "size": 22, "line_spacing": 1.25, "color": "#7C8A72", "align": "center" }
+  ]
+}

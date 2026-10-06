@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "template": "info-white",
+    "use_when": "白底/浅底信息型；玻璃器皿、餐具、小家电、收纳、日用消耗品；靠参数和材质说清价值",
+    "reference": "浅灰底 + 左上大标题 + 材质芯片 + 参数块 + 细节小图 + 项目符号卖点 + 底部色带行动条",
+    "must_replace": ["headline", "chips", "metrics", "detail_image", "bullets", "price", "date"],
+    "warning": "示例文案仅供版式演示，交付前必须替换为真实商品信息"
+  },
+  "project": "kv-info-white",
+  "lang": "zh",
+  "canvas": { "width": 1200, "height": 1500, "background": "#F2F1EE" },
+  "layers": [
+    { "type": "image", "path": "work/base/product-cutout.png", "box": [500, 290, 680, 880],
+      "fit": "contain", "optional": true },
+
+    { "type": "text", "box": [70, 170, 540, 300], "font": "cn", "weight": "bold", "size": 96,
+      "color": "#1F1F1D", "line_spacing": 1.12, "max_lines": 3, "min_size": 58,
+      "text": "玻璃储物罐\n密封防潮" },
+
+    { "type": "chip", "text": "玻璃", "box": [70, 505, 200, 62], "size": 32, "fill": "#7E8B72",
+      "color": "#FFFFFF", "auto_width": true, "icon": "plus_circle", "icon_gap": 14 },
+    { "type": "chip", "text": "木盖", "box": [300, 505, 200, 62], "size": 32, "fill": "#B0713F",
+      "color": "#FFFFFF", "auto_width": true },
+
+    { "type": "metrics", "box": [70, 620, 540, 190], "align": "left", "value_size": 96,
+      "unit_size": 34, "label_size": 28, "color": "#1F1F1D", "label_color": "#6B6A66",
+      "gap": 90, "items": [
+        { "value": "3", "unit": "件", "label": "组合数量" },
+        { "value": "700", "unit": "ml", "label": "单罐容量" }
+      ] },
+
+    { "type": "image", "path": "work/base/detail-macro.png", "box": [70, 850, 300, 300],
+      "fit": "cover", "corner_radius": 14, "optional": true },
+
+    { "type": "list", "box": [70, 1200, 540, 250], "size": 34, "gap": 26, "color": "#2E2D2A",
+      "marker": { "type": "dot", "color": "#B0713F", "size": 18, "gap": 18 },
+      "items": ["密封胶圈防潮，干货不回软", "直纹瓶身，开放式厨房也好看"] },
+
+    { "type": "rect", "box": [0, 1330, 1200, 170], "fill": "#C2542A" },
+    { "type": "metrics", "box": [70, 1348, 620, 132], "align": "left", "value_size": 78,
+      "unit_size": 30, "label_size": 26, "color": "#FFFFFF", "label_color": "#F3D6C7",
+      "items": [
+        { "value": "¥89", "label": "活动价" },
+        { "value": "¥129", "label": "日常价", "color": "#EBB9A4", "strike": true }
+      ] },
+    { "type": "text", "text": "活动至 10月31日 24:00", "box": [710, 1348, 420, 132], "font": "cn",
+      "weight": "medium", "size": 32, "color": "#FFFFFF", "align": "right", "valign": "middle" }
+  ]
+}
