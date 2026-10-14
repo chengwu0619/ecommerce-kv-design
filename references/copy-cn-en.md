@@ -1,5 +1,7 @@
 # 中英双版文案
 
+价格、活动时间、到手价条件等只在任务实际涉及促销时进入文案，并且必须有已核验来源；不涉及促销时不要为了套用模板而添加促销字段。
+
 ## 信息分层的字符预算
 
 | 位置 | 中文 | 英文 | 说明 |
@@ -34,12 +36,12 @@
 
 | 直译 | 建议 |
 | --- | --- |
-| high cost performance | great value for money |
-| one key folding | folds with one hand |
-| environmental protection material | eco-friendly material |
-| sold well | best-selling |
-| limited time big promotion | limited-time offer / on sale now |
-| no need to install | no assembly required |
+| 价值信息（有证据） | value information from source（无来源则省略） |
+| 一键折叠（已核验） | folds with one hand（仅在已核验时使用） |
+| 环保材料（有证据） | verified material description（环保表述必须有来源，否则省略） |
+| 已核验销量 | Verified units sold（无来源则省略） |
+| 已核验促销 | verified promotion details（必须有日期与条件，不得自行补写） |
+| 免安装（已核验） | no assembly required（仅在已核验时使用） |
 
 ## 中英术语对照
 
@@ -48,19 +50,21 @@
 | 活动价 | Sale price |
 | 到手价 | Final price / Price after coupon |
 | 日常价 / 划线价 | Regular price / List price |
-| 包邮 | Free shipping |
-| 限时 | Limited-time / While stocks last |
-| 赠品 | Free gift |
-| 买一送一 | Buy one get one free |
-| 新品首发 | New arrival |
-| 联名 | Collaboration |
-| 质保三年 | 3-year warranty |
-| 官方旗舰店 | Official flagship store |
-| 静音 | Quiet operation |
-| 一键收纳 | Folds in one step |
-| 全季通用 | All-season |
+| 包邮（已核验） | Free shipping（需同时提供条件） |
+| 限时（已核验） | Limited-time（必须有已核验日期；不自动添加库存条件） |
+| 赠品（已核验） | Free gift（必须有已核验活动条件） |
+| 买一送一（已核验） | Buy one get one free（需同时提供活动条件） |
+| 新品首发（已核验） | New arrival（需有发布时间/活动依据） |
+| 联名（已核验） | Collaboration（需有合作依据） |
+| 质保三年（已核验） | 3-year warranty（需有保修条款） |
+| 官方旗舰店（已核验） | Official flagship store（需有官方身份依据） |
+| 静音（已核验） | Quiet operation（仅在功能已核验时使用） |
+| 一键收纳（已核验） | Folds in one step（仅在功能已核验时使用） |
+| 全季通用（已核验） | All-season（仅在适用范围已核验时使用） |
 | 加厚 | Extra-thick |
-| 承重 | Load capacity |
+| 承重（已核验） | Load capacity（需有已核验数值） |
+
+术语表只提供本地化写法，不提供事实依据；环保、库存、销量、功能、促销、官方身份等表述必须有对应来源，未核验时省略或改写为中性且已核验的客观描述。
 
 ## 双版一致性检查
 
