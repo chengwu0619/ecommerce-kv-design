@@ -30,21 +30,12 @@
 
 摄影商品、台座、背景和阴影应共享同一套材质与光线逻辑。若摄影商品与插画/扁平程序化道具出现明显媒介冲突，除非 H2 已明确批准混合媒介，否则应返工底图或配景，不应靠加重阴影掩盖冲突。
 
-### 贴地接触阴影的生成（避免悬空感）
-
-`shadow` 图层是“整张商品轮廓模糊后铺色”，对竖高 / 组合商品（如机器人 + 基站）会被商品本体几乎完全遮住，只剩一圈淡边，成图看起来像悬浮。落地类商品按下面做独立贴地阴影：
-
-1. **量真实接触线**：读商品图 alpha，按阈值（如 alpha>40）找最底一行作为接触线；不要用 `getbbox()` 的底边——它常含一层极淡的裙边，会把接触线带偏到下面几行、让阴影错位。
-2. **造阴影位图**：在画布坐标系（或与商品图同尺寸的坐标系）里，以接触线为中心画“软椭圆 / 压扁脚印”（最深处贴近接触线，向外柔化），或取商品 alpha 底部一行做横向模糊；输出 RGBA 位图，深色、低饱和。
-3. **放对层级**：以 `image` 图层放在背景之后、商品 `image` 图层之前；阴影最深处对准接触线，并略向下 / 侧向偏移以配合来光方向。
-4. **验收**：放大看商品底部与阴影之间无亮缝，明暗从接触线单调衰减到地板原色；必要时逐列取样对比成图与底图确认。
-
 ## 路径一：实拍图（首选）
 
-- 有场景实拍：直接裁成 4:5 使用。裁切时先保证商品完整、水平线不歪，再考虑留白位置——文字区要落在相对干净的区域。
+- 有场景实拍：按 H1 批准的画布比例重新取景。裁切时先保证商品完整、水平线不歪，再考虑 H2 批准的文字留白；不足以合理重构横版时应换素材或重拍，不强裁商品。
 - 只有白底/平铺实拍：先抠图（保留边缘阴影），再用程序化画布合成：底色渐变 + 台面 + 投影 + 商品。合成时给文字区预留明暗差，不要事后靠重压暗补救。
 - 多角度实拍：主视觉只用一张主角度图（正面或 3/4 侧），其余角度留给详情页。
-- 分辨率：底图不低于画布尺寸（1200×1500），放大倍数控制在 1.5 倍以内，避免糊。
+- 分辨率：底图不低于 H1 批准的实际画布尺寸（默认 1200×1500，横版建议 1920×1080），放大倍数控制在 1.5 倍以内，避免糊。
 
 ## 路径二：生图底图
 
@@ -57,17 +48,17 @@
 1. **场景主体**：按 H2 批准布局描述台座、台面和配景的材质、比例、摆放区域；不要描述要由后续合成的真实商品。
 2. **场景**：环境、道具、台面材质（如浅色木台面、米白墙、灰色石台）。
 3. **光线**：光源方向 + 柔硬（如"左上侧柔光，落地窗自然光"）。
-4. **机位与构图**：竖版 4:5；机位、台座位置、场景重心和文字留白按 H2 批准布局设置，不固定居中或固定高度。
+4. **机位与构图**：按 H1 批准的 4:5 或 16:9 画布；机位、台座、场景重心和文字留白按 H2 布局独立设计，不把竖版强裁成横版。
 5. **色调与风格**：整体色温、饱和度、风格关键词（如"北欧极简""暖调高级灰"）。
 6. **硬性禁止**：任何文字、字母、数字、水印、logo、品牌标识、价格标签、人像（除非需要）。
-7. **输出**：4:5 竖版、高分辨率、写实静物场景底图；这是背景板，不是产品保真成图。
+7. **输出**：与 H1 比例一致的写实空场景底图；工具返回其他比例时只对空场景合理重构/重新取景，不拉伸真实商品；这不是产品保真成图。
 
 组装示例（按项替换后使用，不要照抄品牌名）：
 
 ```text
 Realistic empty still-life background plate for an e-commerce composite. No product or product-like object.
 Place an empty <H2-approved support surface> in <H2-approved scene area> with <场景描述>.
-<光源方向与柔硬> lighting, soft natural scene shadows. Vertical 4:5 composition with <H2-approved camera angle>
+<光源方向与柔硬> lighting, soft natural scene shadows. <H1-approved aspect ratio> composition with <H2-approved camera angle>
 and clean negative space only where the approved layout requires text overlay.
 <色调与风格>. High resolution, coherent background plate, commercial editorial quality.
 Absolutely no product, bottle, package, container, device, product silhouette, text, letters, numbers, watermark, logo, price tag, caption, or UI elements.
@@ -79,7 +70,7 @@ Absolutely no product, bottle, package, container, device, product silhouette, t
 
 ## 路径三：占位底图（先定版式）
 
-实拍还没到位、生图不方便时，用 `scripts/make_placeholder_base.py` 生成带产品占位框的 4:5 占位底图，先把版式和信息层级确认下来：
+实拍还没到位、生图不方便时，用 `scripts/make_placeholder_base.py` 生成与 H1 规格一致的带产品占位框底图，先把版式和信息层级确认下来（横版传 `--width 1920 --height 1080`；现有占位框只用于草图，需按 H2 调整）：
 
 ```bash
 python scripts/make_placeholder_base.py --out work/base/base-cn.png --tone greige \
@@ -142,18 +133,19 @@ python scripts/make_scene_base.py --out work/base/base-cn.png --palette mint \
 
 ## 路径六：用户/素材库提供的场景照片（重新构图）
 
-拿到一张竖向场景照（摄影棚静物、水台、台座那种），用 `scripts/build_scene_from_photo.py` 把它重构成 4:5 底图：
+拿到场景照（摄影棚静物、水台、台座等），用 `scripts/build_scene_from_photo.py` 等比缩放裁切到 H1 画布；横版按 H1 确认的尺寸传参，落点由 H2 决定，例如 1920×1080：
 
 ```bash
 python scripts/build_scene_from_photo.py --src work/base/scene-photo-src.jpeg \
-    --dst work/base/base-cn.png --podium-px 548 --podium-py 878 --px 0.674 --py 0.80
+    --dst work/base/base-cn.png --width 1920 --height 1080 \
+    --podium-px <源图台面x> --podium-py <源图台面y> --px <H2目标x比例> --py <H2目标y比例>
 ```
 
-它做三件事：**按宽度铺满 → 平移让指定台面中心落到目标点（默认商品落点 0.674/0.80）→ 多余部分裁出画面**；平移留下的窄条用紧邻像素镜像补齐。`--podium-px/--podium-py` 是源图里"商品要站的台面"的像素坐标，看图目测即可（自动检测在浅色场景下容易把亮墙误判成台面）。
+它会等比放大至覆盖画布，再尽可能对齐台面并裁切，避免黑边；源图不足以兼顾覆盖和目标落点时会告警，必须看实际落点，不得假设坐标输入即证明接触关系。`--podium-px/--podium-py` 是源图的台面位置（自动检测在浅色场景下易把亮墙误判成台面）。
 
 规矩：
 
-- 只做缩放/平移/裁切/窄条补齐，**不做涂抹、修补或去水印**；不想要的元素（含水印）靠重新构图排除到画外。
+- 只做等比缩放/平移/裁切，**不做涂抹、修补或去水印**；不想要的元素（含水印）靠重新构图排除到画外。
 - 第三方照片必须确认授权（自有拍摄 / 已购授权 / AI 生成）；带平台水印的素材默认不可用于交付，详见 `references/compliance-and-claims.md`。
 - 商品若站在水面上，补一层倒影（商品图纵向镜像 + 渐隐 + 轻模糊）才不"浮"。
 

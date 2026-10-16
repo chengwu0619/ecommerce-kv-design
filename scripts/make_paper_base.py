@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""make_paper_base.py — 生成 4:5 纸感底纹底图，用于编辑风/杂志风主视觉。
+"""make_paper_base.py — 生成指定尺寸纸感底纹底图，用于编辑风/杂志风主视觉。
 
 纸感底图的用法：把抠好的商品图叠在纸纹上，再加一层投影（spec 里的 shadow 图层），
 就能得到"商品摆在纸上"的质感。底纹是氛围，不承载信息，所以文字仍由 build_kv.py 渲染。
@@ -84,7 +84,7 @@ def build(width: int, height: int, tone: str, grain: float, blotch: float,
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="生成 4:5 纸感底纹底图")
+    ap = argparse.ArgumentParser(description="生成指定尺寸的纸感底纹底图")
     ap.add_argument("--out", required=True)
     ap.add_argument("--width", type=int, default=1200)
     ap.add_argument("--height", type=int, default=1500)
@@ -96,8 +96,8 @@ def main(argv=None) -> int:
     ap.add_argument("--seed", type=int, default=20261001)
     args = ap.parse_args(argv)
 
-    if abs(args.width / args.height - 0.8) > 0.002:
-        print(f"[warn] 画布 {args.width}×{args.height} 不是 4:5", file=sys.stderr)
+    if args.width <= 0 or args.height <= 0:
+        ap.error("宽高必须为正整数")
     img = build(args.width, args.height, args.tone, args.grain, args.blotch,
                 args.fiber, args.vignette, args.seed)
     out = Path(args.out)

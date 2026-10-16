@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""make_placeholder_base.py — 生成 4:5 占位底图，用于「先定版式、后换实拍」的流程。
+"""make_placeholder_base.py — 生成指定尺寸占位底图，用于「先定版式、后换实拍」的流程。
 
 商品实拍还没到位时，用占位底图先出布局确认稿，避免整条流程卡在等图上。
 占位底图只提供色调、明暗与产品占位区，最终交付必须替换为实拍/正式底图。
@@ -96,7 +96,7 @@ def build(width: int, height: int, tone: str, label: str, product_area: str,
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="生成 4:5 主视觉占位底图")
+    ap = argparse.ArgumentParser(description="生成指定尺寸的主视觉占位底图")
     ap.add_argument("--out", required=True)
     ap.add_argument("--width", type=int, default=1200)
     ap.add_argument("--height", type=int, default=1500)
@@ -107,8 +107,8 @@ def main(argv=None) -> int:
     ap.add_argument("--scrim", type=float, default=0.5)
     args = ap.parse_args(argv)
 
-    if abs(args.width / args.height - 0.8) > 0.002:
-        print(f"[warn] 画布 {args.width}×{args.height} 不是 4:5", file=sys.stderr)
+    if args.width <= 0 or args.height <= 0:
+        ap.error("宽高必须为正整数")
     img = build(args.width, args.height, args.tone, args.label, args.product_area,
                 args.product_ratio, args.scrim)
     out = Path(args.out)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""build_kv.py — 按 JSON 规格确定性合成 4:5 电商商品主视觉（KV）成图。
+"""build_kv.py — 按 JSON 规格确定性合成受支持画布的电商主视觉。
 
 分工原则（本 skill 的核心）：
     * 画面（商品 / 场景 / 光线）来自实拍图、抠图或生图底图；
@@ -8,8 +8,8 @@
 生图模型容易写错中文、价格与日期，所以文字一律不进生图提示词。
 
 用法：
-    python build_kv.py --spec work/spec/kv-cn.json --out outputs/KV-CN-4x5.png
-    python build_kv.py --spec work/spec/kv-en.json --out outputs/KV-EN-4x5.png --scale 1.25
+    python build_kv.py --spec work/spec/kv-cn.json --out work/render/KV-CN-4x5.png
+    python build_kv.py --spec work/spec/kv-en.json --out work/render/KV-EN-4x5.png
 
 规格字段见 references/spec-schema.md；骨架样例见 assets/templates/。
 """
@@ -1062,13 +1062,31 @@ class RenderContext:
 
 
 def build(spec: dict, scale: float = 1.0, keep_alpha: bool = False) -> Image.Image:
+    if not math.isfinite(scale) or scale <= 0:
+        raise ValueError("导出倍率必须为正数")
     working = scale_spec(spec, scale)
     canvas_spec = working.get("canvas", {})
     width = int(canvas_spec.get("width", 1200))
     height = int(canvas_spec.get("height", 1500))
-    ratio = width / height
-    if abs(ratio - 4 / 5) > 0.002 and not canvas_spec.get("allow_other_ratio"):
-        warn(f"画布比例 {width}:{height}（{ratio:.4f}）不是 4:5，交付规格要求竖版 4:5")
+    if width <= 0 or height <= 0:
+        raise ValueError("画布宽高必须为正整数")
+    ratio = spec.get("canvas", {}).get("ratio", "4:5")
+    if ratio not in ("4:5", "16:9"):
+        raise ValueError(f"尚未验证的画布比例：{ratio}；当前仅支持 4:5、16:9")
+    rw, rh = (4, 5) if ratio == "4:5" else (16, 9)
+    source = spec.get("canvas", {})
+    if int(source.get("width", 1200)) * rh != int(source.get("height", 1500)) * rw:
+        raise ValueError(f"spec 画布尺寸与 {ratio} 不符")
+    if min(width, height) < 1000 or width * rh != height * rw:
+        raise ValueError(f"导出尺寸 {width}×{height} 不符合 {ratio} 且最短边 >=1000px 的要求")
+    def check_image_fit(layers):
+        for layer in layers:
+            if layer.get("type") == "image" and layer.get("fit") == "stretch":
+                raise ValueError("图片图层不能使用 stretch；商品使用 contain 以保持原始比例")
+            if layer.get("type") == "group":
+                check_image_fit(layer.get("layers", []))
+
+    check_image_fit(working.get("layers", []))
 
     ctx = RenderContext(working, 1.0)
     ctx.width, ctx.height = width, height
@@ -1085,6 +1103,8 @@ def build(spec: dict, scale: float = 1.0, keep_alpha: bool = False) -> Image.Ima
 
     bg_image = working.get("background_image")
     if bg_image:
+        if bg_image.get("fit") == "stretch":
+            raise ValueError("底图不能使用 stretch；请按画布重新取景或等比裁切")
         img = load_image(bg_image["path"], bg_image)
         if img is not None:
             fitted = fit_image(img, (width, height), bg_image.get("fit", "cover"))
@@ -1103,7 +1123,7 @@ def build(spec: dict, scale: float = 1.0, keep_alpha: bool = False) -> Image.Ima
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="按 JSON 规格合成 4:5 电商主视觉 PNG")
+    ap = argparse.ArgumentParser(description="按 JSON 规格合成 4:5 或 16:9 电商主视觉 PNG")
     ap.add_argument("--spec", required=True, help="规格 JSON 路径")
     ap.add_argument("--out", required=True, help="输出 PNG 路径")
     ap.add_argument("--scale", type=float, default=None, help="整体缩放（默认取 spec.output.scale 或 1.0）")

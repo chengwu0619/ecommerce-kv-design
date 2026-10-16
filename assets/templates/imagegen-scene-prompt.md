@@ -31,12 +31,12 @@ python "$CODEX_HOME/skills/.system/imagegen/scripts/image_gen.py" generate \
 
 ```text
 Use case: product-mockup
-Asset type: e-commerce key-visual background plate, vertical 4:5 portrait, <像素尺寸>
+Asset type: e-commerce key-visual background plate, <H1-approved 4:5 portrait or 16:9 landscape>, <H1-approved pixel dimensions>
 Primary request: an empty still-life set for a product photo composite. The frame must contain NO product, so an H1/H2-approved product photo can be composited on top of the pedestal afterwards.
 Scene/backdrop: <H2 冻结的场景材质与渐变；只描述场景，不推断商品颜色>；背景与台面交接位置按 H2 布局设置，过渡自然、无硬地平线
 Subject: <台座/支撑面：形状、材质、H2 批准位置；顶面必须空且完整可见>；<配景 1–3 件：按 H2 批准区域放置>
 Style/medium: photorealistic empty still-life background plate for product photography, matte and premium editorial, calm and restrained
-Composition/framing: vertical 4:5, <H2-approved camera angle and scene framing>; place the empty support surface at <H2-approved position and scale>; reserve clean negative space only in the approved text zones
+Composition/framing: <H1-approved aspect ratio>, <H2-approved camera angle and scene framing>; place the empty support surface at <H2-approved position and scale>; reserve clean negative space only in the approved text zones; compose landscape independently rather than crop a portrait frame
 Lighting/mood: <光位>，柔和衰减，暖中性白平衡，无高光过曝
 Color palette: <H2 冻结的颜色词；这里只描述场景，不声称商品颜色>
 Materials/textures: <材质词>

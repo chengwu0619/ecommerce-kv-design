@@ -8,7 +8,7 @@
 {
   "project": "kv-dawn-cn",
   "lang": "zh",
-  "canvas": { "width": 1200, "height": 1500, "background": "#F4F2EF" },
+  "canvas": { "ratio": "4:5", "width": 1200, "height": 1500, "background": "#F4F2EF" },
   "fonts": { "cn-bold": "C:/path/to/font.otf", "en-black": ["segoeuib.ttf", "arialbd.ttf"] },
   "background_image": { "path": "work/base/base-cn.png", "fit": "cover", "optional": true },
   "layers": []
@@ -17,7 +17,7 @@
 
 | 字段 | 说明 |
 | --- | --- |
-| `canvas.width/height` | 必须构成 4:5；默认 1200×1500。比例不符会告警且校验不通过 |
+| `canvas.ratio/width/height` | 不填 ratio 默认 `4:5` / 1200×1500（兼容旧模板）；明确 `16:9` 时建议 1920×1080。宽高须为精确比例、最短边 ≥1000；成图尺寸须匹配 H1 批准值。其他比例会拒绝渲染 |
 | `canvas.background` | 底色；也可用 `canvas.background_gradient: {from, to, direction}` |
 | `fonts` | 自定义字体：见下方「字体指定」 |
 | `background_image` | 商品场景底图；`optional: true` 时文件缺失只告警（用于先出布局稿） |
@@ -50,7 +50,7 @@ skill 自带 `assets/fonts/PlayfairDisplay-VF.ttf`（拉丁 Didone 风格衬线�
 
 ## 通用图层字段
 
-- `box: [x, y, w, h]`：左上角坐标 + 宽高，单位 px，按 1200×1500 基准。
+- `box: [x, y, w, h]`：左上角坐标 + 宽高，单位 px，按当前 spec 的画布坐标；以下示例均为 1200×1500 竖版参数，不适用横版。16:9 参见 `assets/templates/landscape-concept-*.json` 并按 H2 独立重排。
 - `opacity: 0–1`：作用于整个图层（含文字抗锯齿边缘）。
 
 ## 图层类型
@@ -126,7 +126,7 @@ skill 自带 `assets/fonts/PlayfairDisplay-VF.ttf`（拉丁 Didone 风格衬线�
   "fit": "contain", "corner_radius": 14, "brightness": 1.0, "optional": false }
 ```
 
-`fit`: `cover`（裁切填满）/ `contain`（完整放入，透明留白）/ `stretch`。商品抠图用 `contain`。
+`fit`: `cover`（裁切填满）/ `contain`（完整放入，透明留白）。图片图层禁用 `stretch`；商品抠图用 `contain`，仍需人工比对完整性与原始比例。
 
 ### shadow 接触投影
 
@@ -210,13 +210,13 @@ skill 自带 `assets/fonts/PlayfairDisplay-VF.ttf`（拉丁 Didone 风格衬线�
 ## 命令行
 
 ```bash
-# 渲染（默认按 spec 尺寸；--scale 放大坐标与字号，不是位图放大）
-python scripts/build_kv.py --spec work/spec/kv-cn.json --out outputs/KV-CN-4x5.png
-python scripts/build_kv.py --spec work/spec/kv-en.json --out outputs/KV-EN-4x5.png --scale 1.5
+# 渲染（两版使用相同 spec 画布及倍率；先留在 work/render）
+python scripts/build_kv.py --spec work/spec/kv-cn.json --out work/render/KV-CN-4x5.png
+python scripts/build_kv.py --spec work/spec/kv-en.json --out work/render/KV-EN-4x5.png
 
 # 交付校验
-python scripts/verify_kv.py --cn outputs/KV-CN-4x5.png --en outputs/KV-EN-4x5.png \
-    --spec-cn work/spec/kv-cn.json --spec-en work/spec/kv-en.json
+python scripts/verify_kv.py --cn work/render/KV-CN-4x5.png --en work/render/KV-EN-4x5.png \
+    --spec-cn work/spec/kv-cn.json --spec-en work/spec/kv-en.json --expected-width 1200 --expected-height 1500
 
 # 内容母本完整性核对
 python scripts/check_copy.py --master work/brief/content-master.json \
@@ -233,3 +233,4 @@ python scripts/make_placeholder_base.py --out work/base/base-cn.png --tone greig
 ```
 
 脚本退出码非 0 = 有硬性不合格项，必须修完再交付。所有 `[warn]` 都要处理，或在交付说明里写明原因。
+H1 批准横版时使用 spec `"ratio":"16:9","width":1920,"height":1080`，文件改为 `KV-CN-16x9.png` / `KV-EN-16x9.png`，QA 参数改为 `--expected-width 1920 --expected-height 1080`。自定义宽高也要按 H1 批准值传入；若构建时通过 `--scale` 覆盖倍率，QA 两版须传相同 `--scale`。命令行值不是批准证据。横版概念模板含占位文案，正式制作须换成获批商品素材与实际事实、重排场景和支撑关系；不得直接交付。

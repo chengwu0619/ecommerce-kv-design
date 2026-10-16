@@ -1,0 +1,14 @@
+{
+  "project": "landscape-concept",
+  "lang": "zh",
+  "canvas": { "ratio": "16:9", "width": 1920, "height": 1080, "background": "#E8EDE9" },
+  "layers": [
+    { "type": "rect", "box": [1010, 85, 815, 825], "fill": "#D0DDDA" },
+    { "type": "rect", "box": [1130, 790, 575, 55], "fill": "#81968D" },
+    { "type": "rect", "box": [1210, 265, 415, 525], "fill": "#E8EDE9", "outline": { "color": "#39635B", "width": 4 } },
+    { "type": "text", "text": "商品素材占位", "box": [1220, 465, 395, 95], "size": 38, "font": "cn", "color": "#28544C", "align": "center" },
+    { "type": "text", "text": "横版构图概念", "box": [105, 245, 760, 170], "size": 94, "font": "cn", "weight": "bold", "color": "#193F3A" },
+    { "type": "text", "text": "依据 H2 调整标题、支撑面与商品落点", "box": [108, 505, 760, 100], "size": 37, "font": "cn", "color": "#28544C" },
+    { "type": "text", "text": "SCHEME ID / VERSION · CONCEPT / NOT FINAL", "box": [108, 885, 850, 85], "size": 27, "font": "en", "weight": "bold", "color": "#28544C" }
+  ]
+}

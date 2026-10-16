@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""verify_kv.py — 交付前硬性校验：比例、尺寸、清晰度、文案是否真的渲染上去了、中英是否成对。
+"""verify_kv.py — 技术校验：画布、格式、文案区域像素和中英成对情况。
 
 用法：
-    python verify_kv.py --cn outputs/KV-CN-4x5.png --en outputs/KV-EN-4x5.png \
+    python verify_kv.py --cn work/render/KV-CN-4x5.png --en work/render/KV-EN-4x5.png \
         --spec-cn work/spec/kv-cn.json --spec-en work/spec/kv-en.json
 
 退出码 0 = 通过；1 = 有硬性不合格项。警告不阻塞交付，但要在交付说明里写清楚。
@@ -80,7 +80,14 @@ def collect_text_boxes(spec: dict) -> list[tuple]:
     return found
 
 
-def check_file(path: Path, label: str, spec_path: Path | None, expect_lang: str | None) -> dict:
+def has_stretched_image(layers: list[dict]) -> bool:
+    return any((layer.get("type") == "image" and layer.get("fit") == "stretch") or
+               (layer.get("type") == "group" and has_stretched_image(layer.get("layers", [])))
+               for layer in layers)
+
+
+def check_file(path: Path, label: str, spec_path: Path, expect_lang: str,
+               expected: tuple[int, int] | None, scale_override: float | None) -> dict:
     info: dict = {"label": label, "path": str(path)}
     if not path.exists():
         fail(f"{label}：文件不存在 {path}")
@@ -89,17 +96,18 @@ def check_file(path: Path, label: str, spec_path: Path | None, expect_lang: str 
     info["size_kb"] = round(size_kb, 1)
     if size_kb < 30:
         fail(f"{label}：文件仅 {size_kb:.1f}KB，疑似空白或导出失败")
-    img = Image.open(path)
+    try:
+        img = Image.open(path)
+        img.load()
+    except (OSError, ValueError) as exc:
+        fail(f"{label}：无法读取图片：{exc}")
+        return info
     info["format"] = img.format
     info["mode"] = img.mode
     info["size"] = list(img.size)
     if img.format != "PNG":
         fail(f"{label}：格式为 {img.format}，要求 PNG")
     w, h = img.size
-    if abs(w / h - 0.8) > 0.002:
-        fail(f"{label}：比例 {w}×{h} = {w / h:.4f}，要求竖版 4:5（0.8）")
-    else:
-        ok(f"{label}：4:5 {w}×{h}")
     if min(w, h) < 1000:
         fail(f"{label}：最短边 {min(w, h)}px < 1000px，清晰度不足")
     gray = img.convert("L")
@@ -108,24 +116,47 @@ def check_file(path: Path, label: str, spec_path: Path | None, expect_lang: str 
         fail(f"{label}：画面几乎为纯色（stddev={stddev:.2f}），成图异常")
     info["stddev"] = round(stddev, 2)
 
-    if spec_path:
-        if not spec_path.exists():
-            note(f"{label}：规格文件缺失，跳过文案与尺寸一致性检查（{spec_path}）")
-        else:
+    if not spec_path.exists():
+        fail(f"{label}：规格文件缺失，无法校验尺寸和文案：{spec_path}")
+    else:
+        try:
             spec = json.loads(spec_path.read_text(encoding="utf-8"))
+            if has_stretched_image(spec.get("layers", [])):
+                fail(f"{label}：图片图层使用 stretch，可能拉伸商品")
+            if (spec.get("background_image") or {}).get("fit") == "stretch":
+                fail(f"{label}：底图使用 stretch，可能拉伸商品或场景")
             canvas = spec.get("canvas", {})
-            base_w = float(canvas.get("width", 1200))
-            factor = w / base_w if base_w else 1.0
-            declared = float((spec.get("output") or {}).get("scale", 1.0) or 1.0)
-            if abs(factor - declared) / max(declared, 1e-6) > 0.01:
-                note(f"{label}：成图按 {factor:.2f}× 规格导出（spec.output.scale={declared}）。"
-                     f"命令行 --scale 属正常；否则确认 spec 与导出参数同源")
+            base_w, base_h = int(canvas.get("width", 1200)), int(canvas.get("height", 1500))
+            ratio = canvas.get("ratio", "4:5")
+            if ratio not in ("4:5", "16:9"):
+                fail(f"{label}：spec 比例 {ratio} 未获当前技术支持")
             else:
-                ok(f"{label}：导出倍率 {factor:.2f}× 与规格一致")
+                rw, rh = (4, 5) if ratio == "4:5" else (16, 9)
+                suffix = "4x5" if ratio == "4:5" else "16x9"
+                if f"-{suffix}" not in path.stem.lower():
+                    fail(f"{label}：文件名 {path.name} 未对应 {ratio}（需包含 -{suffix}）")
+                if base_w <= 0 or base_h <= 0 or base_w * rh != base_h * rw:
+                    fail(f"{label}：spec 尺寸 {base_w}×{base_h} 与 {ratio} 不符")
+                if w * rh != h * rw:
+                    fail(f"{label}：成图比例 {w}×{h} 与 {ratio} 不符")
+            factor = (scale_override if scale_override is not None else
+                      float((spec.get("output") or {}).get("scale", 1.0) or 1.0))
+            if factor <= 0:
+                fail(f"{label}：导出倍率必须为正数")
+            elif (w, h) != (round(base_w * factor), round(base_h * factor)):
+                fail(f"{label}：成图 {w}×{h} 与 spec {base_w}×{base_h} × {factor:g} 不一致")
+            else:
+                ok(f"{label}：{ratio} {w}×{h} 与 spec 导出倍率 {factor:g} 一致")
+            if expected is not None and (w, h) != expected:
+                fail(f"{label}：成图 {w}×{h} 与 H1 输入规格 {expected[0]}×{expected[1]} 不符")
             boxes = collect_text_boxes(spec)
             blank = []
+            outside = []
             for box, text, opacity in boxes:
-                x, y, bw, bh = (int(round(float(v) * factor)) for v in box)
+                x, y, bw, bh = (round(float(v) * factor) for v in box)
+                if bw <= 0 or bh <= 0 or x < 0 or y < 0 or x + bw > w or y + bh > h:
+                    outside.append(text[:14])
+                    continue
                 x0, y0 = max(0, x), max(0, y)
                 x1, y1 = min(w, x + max(bw, 1)), min(h, y + max(bh, 1))
                 if x1 <= x0 or y1 <= y0 or float(opacity or 1) < 0.05:
@@ -135,7 +166,9 @@ def check_file(path: Path, label: str, spec_path: Path | None, expect_lang: str 
                     blank.append(text[:14])
             if blank:
                 fail(f"{label}：以下文案区域没有任何笔迹，可能字体缺失或位置错误：{'、'.join(blank)}")
-            else:
+            if outside:
+                fail(f"{label}：以下文案框越界或尺寸无效：{'、'.join(outside)}")
+            if not blank and not outside:
                 ok(f"{label}：{len(boxes)} 处文案区域均已渲染")
             lang = spec.get("lang")
             if expect_lang and lang and lang != expect_lang:
@@ -146,6 +179,8 @@ def check_file(path: Path, label: str, spec_path: Path | None, expect_lang: str 
                     ok(f"{label}：中文文案已写入规格")
                 else:
                     note(f"{label}：规格里没有检测到中文字符，确认中文版是否漏了中文信息")
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            fail(f"{label}：规格读取或字段无效：{exc}")
     return info
 
 
@@ -153,13 +188,30 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="校验电商主视觉交付件")
     ap.add_argument("--cn", required=True, help="中文版 PNG")
     ap.add_argument("--en", required=True, help="英文版 PNG")
-    ap.add_argument("--spec-cn", default=None)
-    ap.add_argument("--spec-en", default=None)
+    ap.add_argument("--spec-cn", required=True)
+    ap.add_argument("--spec-en", required=True)
+    ap.add_argument("--expected-width", type=int, help="H1 批准的实际交付宽度；须与 --expected-height 同时提供")
+    ap.add_argument("--expected-height", type=int, help="H1 批准的实际交付高度")
+    ap.add_argument("--scale", type=float, help="渲染时命令行覆盖的双版统一倍率；不传则读取 spec.output.scale")
     args = ap.parse_args(argv)
+    if (args.expected_width is None) != (args.expected_height is None):
+        ap.error("--expected-width 与 --expected-height 必须同时提供")
+    expected = ((args.expected_width, args.expected_height)
+                if args.expected_width is not None else None)
 
     cn, en = Path(args.cn), Path(args.en)
-    check_file(cn, "中文版", Path(args.spec_cn) if args.spec_cn else None, "zh")
-    check_file(en, "英文版", Path(args.spec_en) if args.spec_en else None, "en")
+    check_file(cn, "中文版", Path(args.spec_cn), "zh", expected, args.scale)
+    check_file(en, "英文版", Path(args.spec_en), "en", expected, args.scale)
+    if cn.exists() and en.exists():
+        try:
+            sc = json.loads(Path(args.spec_cn).read_text(encoding="utf-8"))
+            se = json.loads(Path(args.spec_en).read_text(encoding="utf-8"))
+            if sc.get("canvas") != se.get("canvas"):
+                fail("中英版 spec.canvas 不一致")
+            if sc.get("background_image") != se.get("background_image"):
+                fail("中英版 background_image 不一致，须使用同一底图")
+        except (OSError, ValueError) as exc:
+            fail(f"中英规格无法交叉核对：{exc}")
 
     if cn.exists() and en.exists():
         a, b = Image.open(cn).convert("RGB"), Image.open(en).convert("RGB")

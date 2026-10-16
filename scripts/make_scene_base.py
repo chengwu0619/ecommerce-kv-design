@@ -568,7 +568,7 @@ def build(width, height, palette, props, floor, pedestal, branch_side, branch_ba
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="生成 4:5 商品场景底图（渐变 + 配景）")
+    ap = argparse.ArgumentParser(description="生成指定尺寸的商品场景底图（渐变 + 配景）")
     ap.add_argument("--out", required=True)
     ap.add_argument("--width", type=int, default=1200)
     ap.add_argument("--height", type=int, default=1500)
@@ -598,8 +598,8 @@ def main(argv=None) -> int:
     ap.add_argument("--seed", type=int, default=20261001)
     args = ap.parse_args(argv)
 
-    if abs(args.width / args.height - 0.8) > 0.002:
-        print(f"[warn] 画布 {args.width}×{args.height} 不是 4:5", file=sys.stderr)
+    if args.width <= 0 or args.height <= 0:
+        ap.error("宽高必须为正整数")
     props = [p.strip() for p in args.props.split(",") if p.strip()]
     img = build(args.width, args.height, args.palette, props, args.floor,
                 None if args.no_pedestal else args.pedestal, args.branch_side,
